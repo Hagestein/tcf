@@ -45,7 +45,7 @@
                     <field name="lst_price_incl_tax"/>
                 </field>
             <xpath expr="//div[hasclass('oe_kanban_details')]//field[@name='lst_price']" position="after">
-                /                <field name="lst_price_incl_tax" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}">/>
+                /                <field name="lst_price_incl_tax" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
             </xpath>
         </field>
     </record>
