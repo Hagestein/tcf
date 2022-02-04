@@ -4,7 +4,7 @@
     "name":
     'TCF Shopify EPT',
     "version":
-    '13.0.1.0.1',
+    '13.0.1.0.2',
     "author":
     'ERP-M B.V.',
     "website":
