@@ -41,9 +41,9 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_kanban_view"></field>
         <field name="arch" type="xml">
-            <field name="lst_price" position="after">
-                    <field name="lst_price_incl_tax"/>
-                </field>
+            <!-- <field name="lst_price" position="after"> -->
+                    <!-- <field name="lst_price_incl_tax"/> -->
+                <!-- </field> -->
             <xpath expr="//div[hasclass('oe_kanban_details')]//field[@name='lst_price']" position="after">
                 /                <field name="lst_price_incl_tax" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
             </xpath>
