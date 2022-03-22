@@ -15,11 +15,12 @@ class ShopifyProductProductEpt(models.Model):
                                  instance, variant, is_set_price,
                                  is_set_basic_detail)
         if is_set_price:
-            price = instance.shopify_pricelist_id.with_context(
-                tax_incl=True).get_product_price(
-                    variant.product_id,
-                    1.0,
-                    partner=False,
-                    uom_id=variant.product_id.uom_id.id)
+            price = instance.shopify_pricelist_id.get_product_price(variant.product_id, 1.0, partner=False,
+                                                                    uom_id=variant.product_id.uom_id.id)
+            variant.product_id.taxes_id.filtered(
+                lambda x: x.company_id.id == self.env.user.company_id.id).compute_all(
+                    price,
+                    self.env.user.company_id.currency_id,
+                    product=variant.product_id)['total_included']
             variant_vals.update({'price': float(price)})
         return variant_vals
