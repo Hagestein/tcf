@@ -17,8 +17,11 @@ class ShopifyProductProductEpt(models.Model):
                                  is_set_basic_detail)
         if is_set_price:
             _logger.info("Set Price: Product: %s" % variant.product_id.name)
-            price = instance.shopify_pricelist_id.get_product_price(variant.product_id, 1.0, partner=False,
-                                                                    uom_id=variant.product_id.uom_id.id)
+            if variant_vals.get('price'):
+                price = variant_vals.get('price')
+            else:
+                price = instance.shopify_pricelist_id.get_product_price(variant.product_id, 1.0, partner=False,
+                                                                        uom_id=variant.product_id.uom_id.id)
             _logger.info("Set Price: Price: %s" % price)
             incl_price = variant.product_id.taxes_id.filtered(
                 lambda x: x.company_id.id == self.env.user.company_id.id).compute_all(
