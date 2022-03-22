@@ -24,7 +24,7 @@ class ProductPricelist(models.Model):
             for product in products:
                 res[product.id] = product.taxes_id.filtered(
                     lambda x: x.company_id.id == company_id).compute_all(
-                        res[product.id], product=product.id)['total_included']
+                        res[product.id], product=product)['total_included']
         return res
 
     def get_product_price(self,
@@ -44,5 +44,5 @@ class ProductPricelist(models.Model):
                           or self.env.user.company_id.id)
             getprice = product.taxes_id.filtered(
                 lambda x: x.company_id.id == company_id).compute_all(
-                    getprice, product=product.id)['total_included']
+                    getprice, product=product)['total_included']
         return getprice
