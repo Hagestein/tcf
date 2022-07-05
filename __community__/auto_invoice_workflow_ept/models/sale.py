@@ -149,6 +149,7 @@ class SaleOrder(models.Model):
                 vals.update({'bom_line_id': bom_line[0].id})
             stock_move = self.env['stock.move'].create(vals)
             stock_move._action_assign()
-            stock_move._set_quantity_done(product_qty)
-            stock_move._action_done()
+            # ERP.M Adjustment
+            # stock_move._set_quantity_done(product_qty)
+            # stock_move._action_done()
         return True
