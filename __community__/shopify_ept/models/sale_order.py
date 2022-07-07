@@ -1158,7 +1158,7 @@ class SaleOrder(models.Model):
                             'picking_id': picking.id,
                             'location_dest_id': move_id.location_dest_id.id,
                            })
-                    picking.with_context(auto_processed_orders_ept=True).action_done()
+                    # picking.with_context(auto_processed_orders_ept=True).action_done()
                     return True
                 if picking.state != "assigned":
                     return False

@@ -227,11 +227,11 @@ class StockPicking(models.Model):
                                 'move_id': product_move_lines and product_move_lines[0].id,
                             })
                 pick_ids.append(picking_id)
-        if pick_ids:
-            pickings = self.search([('state', '=', 'assigned'), ('id', 'in', list(set(pick_ids)))])
-            pickings and pickings.action_done()
-            pickings = self.search([('state', '!=', 'done'), ('id', 'in', list(set(pick_ids)))])
-            pickings and pickings.action_done()
+        # if pick_ids:
+        #     pickings = self.search([('state', '=', 'assigned'), ('id', 'in', list(set(pick_ids)))])
+        #     pickings and pickings.action_done()
+        #     pickings = self.search([('state', '!=', 'done'), ('id', 'in', list(set(pick_ids)))])
+        #     pickings and pickings.action_done()
 
     """Use Below Method For single traking_no
     datas = [{'product_id':id,'product_qty':qty},{'product_id':id,'product_qty':qty}]
@@ -408,11 +408,11 @@ class StockPicking(models.Model):
                             'move_id': product_move_lines and product_move_lines[0].id,
                         })
                 pick_ids.append(picking_id)
-        if pick_ids:
-            pickings = self.search([('state', '=', 'assigned'), ('id', 'in', list(set(pick_ids)))])
-            pickings and pickings.action_done()
-            pickings = self.search([('state', '!=', 'done'), ('id', 'in', list(set(pick_ids)))])
-            pickings and pickings.action_done()
+        # if pick_ids:
+        #     pickings = self.search([('state', '=', 'assigned'), ('id', 'in', list(set(pick_ids)))])
+        #     pickings and pickings.action_done()
+        #     pickings = self.search([('state', '!=', 'done'), ('id', 'in', list(set(pick_ids)))])
+        #     pickings and pickings.action_done()
 
     """ Pass Parameter Datas Dictionary which you have to create Return Picking..
     datas = {'picking_id':id,'move_id':move_id,'location_dest_id':dest_loction,'qty':qty}
