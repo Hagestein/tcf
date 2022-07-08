@@ -60,8 +60,11 @@ class Main(http.Controller):
                 "CREATE ORDER WEBHOOK call for order: {0}".format(res))
         # Below two line add because when fulfillment status is null it means it is a unshipped order
         # in shopify store so we update the value in response of shopify.
-        if not res.get("fulfillment_status"):
-            res.update({'fulfillment_status':'unshipped'})
+        
+        #ERP.M Adjustment
+        res.update({'fulfillment_status':'unshipped'})
+        # if not res.get("fulfillment_status"):
+        #     res.update({'fulfillment_status':'unshipped'})
         if res.get("fulfillment_status") in instance.import_shopify_order_status_ids.mapped(
                 "status"):
             request.env["sale.order"].sudo().process_shopify_order_via_webhook(res, instance)

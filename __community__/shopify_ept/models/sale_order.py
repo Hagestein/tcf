@@ -220,8 +220,10 @@ class SaleOrder(models.Model):
         # Add by Vrajesh Parekh -Dt: 31/03/2020 for pos order automatically delivered when import
         # sale order in shopify store.
         order = order_id.filtered(lambda s: s.is_pos_order or s.shopify_order_status == "fulfilled")
-        if order:
-            order.fulfilled_shopify_order()
+        
+        #ERP.M No automatic fulfilment
+        # if order:
+        #     order.fulfilled_shopify_order()
 
         _logger.info('Done auto workflow process for Odoo order(%s) and Shopify order is (%s)'
                      % (order_id.name, order_response.get('order_number')))
@@ -404,7 +406,9 @@ class SaleOrder(models.Model):
             'shopify_payment_gateway_id':payment_gateway and payment_gateway.id or False,
             'shopify_instance_id':instance.id,
             'global_channel_id':instance.shopify_global_channel_id and instance.shopify_global_channel_id.id or False,
-            'shopify_order_status':order_response.get('fulfillment_status'),
+            #ERP.M Adjustment
+            'shopify_order_status': 'unshipped',
+            # 'shopify_order_status':order_response.get('fulfillment_status'),
             'picking_policy':workflow.picking_policy or False,
             'auto_workflow_process_id':workflow and workflow.id,
             # 'payment_term_id':payment_term_id and payment_term_id or payment_term or False,
@@ -1060,12 +1064,13 @@ class SaleOrder(models.Model):
                     message = "Currently partial refund is created in Shopify. Either create credit"
                     " note manual or refund fully in shopify."
         # Below condition use for, In shopify store there is fulfilled order.
-        elif order_data.get('fulfillment_status') == 'fulfilled':
-            fulfilled = order.fulfilled_shopify_order()
-            if isinstance(fulfilled, bool) and not fulfilled:
-                message = "System can not complete the picking as there is not enough quantity."
-            elif not fulfilled:
-                message = "System can not complete the picking as {0}".format(fulfilled)
+        #ERP.M No automatic fullfilment
+        # elif order_data.get('fulfillment_status') == 'fulfilled':
+            # fulfilled = order.fulfilled_shopify_order()
+            # if isinstance(fulfilled, bool) and not fulfilled:
+            #     message = "System can not complete the picking as there is not enough quantity."
+            # elif not fulfilled:
+            #     message = "System can not complete the picking as {0}".format(fulfilled)
 
         if message:
             comman_log_line_obj = self.env["common.log.lines.ept"]
@@ -1128,9 +1133,11 @@ class SaleOrder(models.Model):
         """
         if self.state not in ["sale", "done", "cancel"]:
             self.action_confirm()
-        return self.fulfilled_picking_for_shopify(self.picking_ids.filtered(lambda x:
-                                                                            x.location_dest_id.usage
-                                                                            == "customer"))
+        #ERP.M Adjustemnt
+        return True
+        # return self.fulfilled_picking_for_shopify(self.picking_ids.filtered(lambda x:
+        #                                                                     x.location_dest_id.usage
+        #                                                                     == "customer"))
 
     def fulfilled_picking_for_shopify(self, pickings):
         """
